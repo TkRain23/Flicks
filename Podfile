@@ -5,5 +5,6 @@ use_frameworks!
 
 target 'CodePath_Flicks' do
     pod 'AFNetworking'
+    pod 'MBProgressHUD'
 end
 
