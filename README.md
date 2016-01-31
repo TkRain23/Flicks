@@ -30,7 +30,7 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 w/ Internet </br>
-<img src='http://i.imgur.com/5yAhefX.webm' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/Y5AAkXJ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 w/ No Internet </br>
 <img src='http://i.imgur.com/3gEkHAy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
