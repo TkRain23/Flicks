@@ -33,7 +33,7 @@ w/ Internet </br>
 <img src='http://i.imgur.com/Y5AAkXJ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 w/ No Internet </br>
-<img src='http://i.imgur.com/3gEkHAy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/0V0i4bs.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
