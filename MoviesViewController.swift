@@ -89,6 +89,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 }
                 else{
                     self.errorView.hidden = false
+                    MBProgressHUD.hideHUDForView(self.view, animated: true)
                 }
         })
         task.resume()
