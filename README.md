@@ -29,10 +29,10 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-w/ Internet
+w/ Internet </br>
 <img src='http://i.imgur.com/D2fNZSS.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-w/ No Internet
+w/ No Internet </br>
 <img src='http://i.imgur.com/3gEkHAy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
