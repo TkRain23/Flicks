@@ -22,9 +22,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movies: [NSDictionary]?
     //added "?" to make it optional therefore making the app safer and less likely to crash
     
+    var endpoint: String!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        /*
+        let searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        self.navigationItem.titleView = searchBar
+        */
+        
         
         errorView.hidden = true
         
@@ -41,7 +50,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
         networkRequest()
        
-
+        
+        // hey man hows it goin
         // Do any additional setup after loading the view.
     }
     
@@ -52,7 +62,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func networkRequest() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
@@ -117,38 +127,46 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = movies![indexPath.row]
         let title = movie["title"] as? String ?? ""
         let overview = movie["overview"] as! String
-        let posterpath = movie["poster_path"] as? String ?? ""
         let baseUrl = "http://image.tmdb.org/t/p/w500"
-        let imageUrl = NSURL(string: baseUrl + posterpath)
         
+        if(cell.selected){
+            cell.backgroundColor = UIColor.redColor()
+        }else{
+            cell.backgroundColor = UIColor.blackColor()
+        }
+        
+        if let posterpath = movie["poster_path"] as? String {
+            let imageUrl = NSURL(string: baseUrl + posterpath)
+            let imageRequest = NSURLRequest(URL: imageUrl!)
+            
+            cell.posterView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    
+                    // imageResponse will be nil if the image is cached
+                    if imageResponse != nil {
+                        print("Image was NOT cached, fade in image")
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = image
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            cell.posterView.alpha = 1.0
+                        })
+                    } else {
+                        print("Image was cached so just update the image")
+                        cell.posterView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    // do something for the failure condition
+            })
+
+        }
 
         
         cell.titleLabel.text = filteredData[indexPath.row]
         cell.overviewLabel.text = overview
         
-        let imageRequest = NSURLRequest(URL: imageUrl!)
-        
-        cell.posterView.setImageWithURLRequest(
-            imageRequest,
-            placeholderImage: nil,
-            success: { (imageRequest, imageResponse, image) -> Void in
-                
-                // imageResponse will be nil if the image is cached
-                if imageResponse != nil {
-                    print("Image was NOT cached, fade in image")
-                    cell.posterView.alpha = 0.0
-                    cell.posterView.image = image
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        cell.posterView.alpha = 1.0
-                    })
-                } else {
-                    print("Image was cached so just update the image")
-                    cell.posterView.image = image
-                }
-            },
-            failure: { (imageRequest, imageResponse, error) -> Void in
-                // do something for the failure condition
-        })
         
         //by adding an exclamation I am positive that there is something there
         
@@ -156,6 +174,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         print("row \(indexPath.row)")
         return cell
     }
+   
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
@@ -165,14 +184,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.reloadData()
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+        
+        print("prepare for segue called")
+        
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+    
+        // will tim ever find these comments
     }
-    */
+    
 
 }
